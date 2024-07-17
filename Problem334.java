@@ -1,4 +1,5 @@
 
+import java.text.BreakIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,11 +10,11 @@ public class Problem334 {
 
     public static void main(String[] args) {
         // Your code here
-        System.out.println(increasingTriplet(new int[] { 2,1,5,0,4,6 }));
+        System.out.println(increasingTriplet(new int[] { 1,2,2,1 }));
     }
 
     public static boolean increasingTriplet(int[] nums) {
-        
+
         List<Tuple<Integer, Integer>> numsList = new ArrayList<>();
 
         for (int i = 0; i < nums.length; i++) {
@@ -21,7 +22,6 @@ public class Problem334 {
             numsList.add(temp);
         }
 
-        
         Collections.sort(numsList, new Comparator<Tuple<Integer, Integer>>() {
             @Override
             public int compare(Tuple<Integer, Integer> t1, Tuple<Integer, Integer> t2) {
@@ -29,12 +29,22 @@ public class Problem334 {
             }
         });
 
-        for (int i = 0; i < numsList.size() - 2; i++) {
-            if ((numsList.get(i).getFirst() < numsList.get(i+1).getFirst() && numsList.get(i+1).getFirst() < numsList.get(i+2).getFirst()) && (numsList.get(i).getSecond() < numsList.get(i+1).getSecond() && numsList.get(i+1).getSecond() < numsList.get(i+2).getSecond())) {
-                return true;
-            }
-        }
+        int count = 0;
+        int indexToCheck = 0;
 
+        for (int i = 0; i < numsList.size() - 2; i++) {
+            indexToCheck = numsList.get(i).getSecond();
+            for (int j = i+1; j < numsList.size(); j++) {
+                if ((indexToCheck < numsList.get(j).getSecond()) && (numsList.get(i).getFirst() < numsList.get(j).getFirst())) {
+                    indexToCheck = numsList.get(j).getSecond();
+                    count++;
+                    if (count == 2) {
+                        return true;
+                    }
+                }
+            }   
+        }
+        
         return false;
     }
 }
