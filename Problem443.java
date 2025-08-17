@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Problem443 {
     public static void main(String[] args) {
         // Your code here
